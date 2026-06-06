@@ -1,0 +1,875 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>منصة سهل — التعليم الإلكتروني</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --gold:#C9A84C;--gold-light:#E8C96B;--gold-dark:#A8892E;
+  --bg:#080C0E;--bg2:#0D1418;--bg3:#111820;--bg4:#161E26;
+  --border:#1E2D38;--border2:#243040;
+  --text:#F0F4F8;--text2:#A8B8C8;--text3:#607080;
+  --green:#10B981;--blue:#3B82F6;--purple:#8B5CF6;--red:#EF4444;
+}
+html{scroll-behavior:smooth}
+body{font-family:'Cairo',sans-serif;background:var(--bg);color:var(--text);overflow-x:hidden;line-height:1.6}
+a{text-decoration:none;color:inherit}
+button{cursor:pointer;border:none;background:none;font-family:inherit}
+img{max-width:100%}
+
+/* ── Scrollbar ── */
+::-webkit-scrollbar{width:6px}
+::-webkit-scrollbar-track{background:var(--bg)}
+::-webkit-scrollbar-thumb{background:var(--border2);border-radius:3px}
+
+/* ── Utilities ── */
+.container{max-width:1200px;margin:0 auto;padding:0 24px}
+.gold{background:linear-gradient(135deg,var(--gold),var(--gold-light));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.gold-bg{background:linear-gradient(135deg,var(--gold),var(--gold-light))}
+.badge{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:600;padding:4px 12px;border-radius:20px}
+.badge-gold{background:rgba(201,168,76,.15);color:var(--gold);border:1px solid rgba(201,168,76,.3)}
+.badge-green{background:rgba(16,185,129,.12);color:var(--green)}
+.badge-blue{background:rgba(59,130,246,.12);color:var(--blue)}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:12px 28px;border-radius:14px;font-size:14px;font-weight:700;font-family:'Cairo',sans-serif;transition:all .25s;cursor:pointer}
+.btn-gold{background:linear-gradient(135deg,var(--gold),var(--gold-light));color:#0D0A00}
+.btn-gold:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(201,168,76,.35)}
+.btn-outline{background:transparent;border:1.5px solid var(--border2);color:var(--text2)}
+.btn-outline:hover{border-color:var(--gold);color:var(--gold)}
+.card{background:var(--bg3);border:1px solid var(--border);border-radius:20px;overflow:hidden;transition:all .3s}
+.card:hover{border-color:var(--border2);transform:translateY(-4px);box-shadow:0 20px 60px rgba(0,0,0,.4)}
+.section-title{font-size:clamp(26px,4vw,40px);font-weight:800;margin-bottom:12px}
+.section-sub{color:var(--text2);font-size:16px;line-height:1.7}
+.tag{font-size:11px;font-weight:600;padding:3px 10px;border-radius:6px;background:rgba(255,255,255,.06);color:var(--text2)}
+.stars{color:var(--gold);font-size:13px;letter-spacing:1px}
+.progress-bar{height:6px;background:var(--border);border-radius:3px;overflow:hidden}
+.progress-fill{height:100%;background:linear-gradient(90deg,var(--gold),var(--gold-light));border-radius:3px;transition:width 1.2s ease}
+.fade-in{opacity:0;transform:translateY(24px);transition:opacity .7s ease,transform .7s ease}
+.fade-in.visible{opacity:1;transform:translateY(0)}
+
+/* ── NAV ── */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:0 24px;height:68px;display:flex;align-items:center;background:rgba(8,12,14,.85);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);transition:all .3s}
+.nav-inner{max-width:1200px;margin:0 auto;width:100%;display:flex;align-items:center;gap:20px}
+.nav-logo{display:flex;align-items:center;gap:10px;flex-shrink:0}
+.logo-icon{width:38px;height:38px;border-radius:10px;background:linear-gradient(135deg,var(--gold),var(--gold-light));display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:900;color:#0D0A00}
+.logo-text{font-size:20px;font-weight:800}
+.nav-links{display:flex;align-items:center;gap:4px;margin-right:auto}
+.nav-link{padding:8px 14px;border-radius:10px;font-size:14px;color:var(--text2);transition:all .2s}
+.nav-link:hover{background:var(--bg3);color:var(--text)}
+.nav-actions{display:flex;align-items:center;gap:10px;margin-right:auto;margin-left:0}
+
+/* ── HERO ── */
+.hero{min-height:100vh;display:flex;align-items:center;position:relative;overflow:hidden;padding-top:68px}
+.hero-bg{position:absolute;inset:0;background:radial-gradient(ellipse 80% 60% at 50% -10%,rgba(201,168,76,.12),transparent),radial-gradient(ellipse 60% 40% at 80% 80%,rgba(59,130,246,.08),transparent)}
+.hero-grid{position:absolute;inset:0;opacity:.04;background-image:linear-gradient(var(--border2) 1px,transparent 1px),linear-gradient(90deg,var(--border2) 1px,transparent 1px);background-size:48px 48px}
+.hero-content{position:relative;z-index:1;display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center;padding:80px 0}
+.hero-eyebrow{display:flex;align-items:center;gap:10px;margin-bottom:24px}
+.hero-dot{width:8px;height:8px;border-radius:50%;background:var(--gold);box-shadow:0 0 12px var(--gold);animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+.hero-h1{font-size:clamp(32px,5vw,58px);font-weight:900;line-height:1.15;margin-bottom:20px}
+.hero-p{font-size:17px;color:var(--text2);line-height:1.8;margin-bottom:36px;max-width:480px}
+.hero-btns{display:flex;gap:14px;flex-wrap:wrap}
+.hero-stats{display:flex;gap:32px;margin-top:48px}
+.hstat-val{font-size:28px;font-weight:800}
+.hstat-lbl{font-size:12px;color:var(--text3);margin-top:2px}
+.hero-visual{position:relative}
+.hero-phone{background:var(--bg3);border:1px solid var(--border2);border-radius:28px;padding:20px;position:relative;z-index:2}
+.course-preview-card{background:var(--bg4);border:1px solid var(--border);border-radius:16px;padding:16px;margin-bottom:12px;display:flex;gap:12px;align-items:center}
+.course-thumb{width:52px;height:52px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:24px;flex-shrink:0}
+.float-badge{position:absolute;padding:10px 16px;border-radius:14px;font-size:13px;font-weight:700;backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,.1);animation:float 4s ease-in-out infinite}
+.float-badge.top{top:-20px;left:-30px;background:rgba(16,185,129,.2);color:#34D399;animation-delay:.5s}
+.float-badge.bottom{bottom:-20px;right:-20px;background:rgba(201,168,76,.2);color:var(--gold-light)}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+.orb{position:absolute;border-radius:50%;filter:blur(80px);pointer-events:none}
+.orb1{width:400px;height:400px;background:rgba(201,168,76,.06);top:-100px;right:-100px}
+.orb2{width:300px;height:300px;background:rgba(59,130,246,.05);bottom:-50px;left:-80px}
+
+/* ── STATS BAND ── */
+.stats-band{background:var(--bg2);border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:40px 0}
+.stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:24px;text-align:center}
+.stat-icon{width:48px;height:48px;border-radius:14px;display:flex;align-items:center;justify-content:center;margin:0 auto 12px;font-size:22px}
+.stat-val{font-size:32px;font-weight:800;margin-bottom:4px}
+.stat-lbl{font-size:13px;color:var(--text3)}
+
+/* ── CATEGORIES ── */
+.categories{padding:100px 0}
+.section-header{text-align:center;margin-bottom:56px}
+.cats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+.cat-card{background:var(--bg3);border:1px solid var(--border);border-radius:18px;padding:24px;cursor:pointer;transition:all .3s;text-align:center}
+.cat-card:hover{border-color:var(--gold);background:rgba(201,168,76,.05);transform:translateY(-4px)}
+.cat-icon{width:52px;height:52px;border-radius:16px;display:flex;align-items:center;justify-content:center;margin:0 auto 14px;font-size:26px}
+.cat-name{font-size:14px;font-weight:700;margin-bottom:4px}
+.cat-count{font-size:12px;color:var(--text3)}
+
+/* ── COURSES ── */
+.courses{padding:0 0 100px}
+.courses-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+.course-card{background:var(--bg3);border:1px solid var(--border);border-radius:20px;overflow:hidden;cursor:pointer;transition:all .3s}
+.course-card:hover{border-color:var(--border2);transform:translateY(-5px);box-shadow:0 24px 60px rgba(0,0,0,.5)}
+.course-thumb-big{height:160px;display:flex;align-items:center;justify-content:center;font-size:52px;position:relative}
+.course-badges{position:absolute;top:12px;right:12px;display:flex;gap:6px}
+.course-body{padding:18px}
+.course-title{font-size:15px;font-weight:700;line-height:1.4;margin-bottom:8px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.course-instructor{font-size:12px;color:var(--text3);margin-bottom:10px;display:flex;align-items:center;gap:6px}
+.inst-avatar{width:20px;height:20px;border-radius:50%;background:linear-gradient(135deg,var(--gold),var(--gold-light));display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:#0D0A00;flex-shrink:0}
+.course-rating{display:flex;align-items:center;gap:6px;font-size:13px;margin-bottom:12px}
+.rating-val{font-weight:700;color:var(--gold)}
+.rating-count{font-size:11px;color:var(--text3)}
+.course-meta{display:flex;gap:12px;font-size:11px;color:var(--text3);margin-bottom:14px;padding-top:12px;border-top:1px solid var(--border)}
+.meta-item{display:flex;align-items:center;gap:4px}
+.course-price-row{display:flex;align-items:center;justify-content:space-between}
+.price-now{font-size:20px;font-weight:800;color:var(--gold)}
+.price-orig{font-size:13px;color:var(--text3);text-decoration:line-through;margin-right:8px}
+.price-free{font-size:18px;font-weight:800;color:var(--green)}
+.enroll-btn{padding:8px 16px;border-radius:10px;font-size:12px;font-weight:700;background:rgba(201,168,76,.15);color:var(--gold);border:1px solid rgba(201,168,76,.3);transition:all .2s}
+.enroll-btn:hover{background:var(--gold);color:#0D0A00}
+
+/* ── INSTRUCTORS ── */
+.instructors{padding:0 0 100px;background:linear-gradient(180deg,transparent,rgba(201,168,76,.03),transparent)}
+.inst-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:24px}
+.inst-card{background:var(--bg3);border:1px solid var(--border);border-radius:20px;padding:28px;text-align:center;transition:all .3s;cursor:pointer}
+.inst-card:hover{border-color:var(--gold);transform:translateY(-4px)}
+.inst-avatar-big{width:80px;height:80px;border-radius:50%;margin:0 auto 14px;display:flex;align-items:center;justify-content:center;font-size:32px;font-weight:700;color:#0D0A00;border:3px solid rgba(201,168,76,.3)}
+.inst-name{font-size:16px;font-weight:700;margin-bottom:4px}
+.inst-specialty{font-size:13px;color:var(--text3);margin-bottom:14px}
+.inst-stats-row{display:flex;justify-content:center;gap:20px;font-size:12px}
+.inst-stat{text-align:center}
+.inst-stat-v{font-weight:700;color:var(--text);font-size:15px}
+.inst-stat-l{color:var(--text3);font-size:11px}
+
+/* ── HOW IT WORKS ── */
+.how{padding:100px 0;background:var(--bg2);border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
+.steps-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:24px;position:relative}
+.steps-grid::before{content:'';position:absolute;top:40px;right:12%;left:12%;height:1px;background:linear-gradient(90deg,transparent,var(--border2),transparent);pointer-events:none}
+.step-card{background:var(--bg3);border:1px solid var(--border);border-radius:20px;padding:28px;text-align:center;position:relative}
+.step-num{width:56px;height:56px;border-radius:16px;background:linear-gradient(135deg,var(--gold),var(--gold-light));display:flex;align-items:center;justify-content:center;font-size:22px;font-weight:900;color:#0D0A00;margin:0 auto 16px;box-shadow:0 8px 24px rgba(201,168,76,.25)}
+.step-title{font-size:16px;font-weight:700;margin-bottom:8px}
+.step-desc{font-size:13px;color:var(--text2);line-height:1.6}
+
+/* ── TESTIMONIALS ── */
+.testimonials{padding:100px 0}
+.testimonials-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.test-card{background:var(--bg3);border:1px solid var(--border);border-radius:20px;padding:28px;transition:all .3s}
+.test-card:hover{border-color:var(--border2)}
+.test-quote{font-size:36px;color:var(--gold);opacity:.4;line-height:1;margin-bottom:16px}
+.test-text{font-size:14px;color:var(--text2);line-height:1.8;margin-bottom:20px}
+.test-author{display:flex;align-items:center;gap:12px}
+.test-avatar{width:44px;height:44px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:700;color:#0D0A00;flex-shrink:0}
+.test-name{font-size:14px;font-weight:700}
+.test-role{font-size:12px;color:var(--text3)}
+
+/* ── CTA ── */
+.cta-section{padding:100px 0}
+.cta-box{background:linear-gradient(135deg,rgba(201,168,76,.12),rgba(201,168,76,.04));border:1px solid rgba(201,168,76,.25);border-radius:32px;padding:80px 60px;text-align:center;position:relative;overflow:hidden}
+.cta-box::before{content:'';position:absolute;top:-50%;right:-10%;width:400px;height:400px;background:radial-gradient(circle,rgba(201,168,76,.15),transparent 70%);border-radius:50%;pointer-events:none}
+.cta-h2{font-size:clamp(28px,4vw,46px);font-weight:900;margin-bottom:16px}
+.cta-p{font-size:17px;color:var(--text2);margin-bottom:40px}
+.cta-btns{display:flex;gap:16px;justify-content:center;flex-wrap:wrap}
+
+/* ── FOOTER ── */
+footer{background:var(--bg2);border-top:1px solid var(--border);padding:60px 0 30px}
+.footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:48px;margin-bottom:48px}
+.footer-brand p{font-size:14px;color:var(--text3);line-height:1.7;margin-top:12px;max-width:260px}
+.footer-col h4{font-size:14px;font-weight:700;margin-bottom:16px;color:var(--text)}
+.footer-link{display:block;font-size:13px;color:var(--text3);margin-bottom:10px;transition:color .2s}
+.footer-link:hover{color:var(--gold)}
+.footer-bottom{border-top:1px solid var(--border);padding-top:24px;display:flex;justify-content:space-between;align-items:center;font-size:13px;color:var(--text3)}
+.socials{display:flex;gap:10px}
+.social-btn{width:36px;height:36px;border-radius:10px;background:var(--bg3);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:16px;transition:all .2s;cursor:pointer}
+.social-btn:hover{border-color:var(--gold);background:rgba(201,168,76,.1)}
+
+/* ── MODAL ── */
+.modal-overlay{display:none;position:fixed;inset:0;z-index:200;background:rgba(0,0,0,.8);backdrop-filter:blur(8px);align-items:center;justify-content:center;padding:20px}
+.modal-overlay.open{display:flex}
+.modal{background:var(--bg3);border:1px solid var(--border2);border-radius:24px;width:100%;max-width:520px;max-height:85vh;overflow-y:auto;animation:modalIn .3s ease}
+@keyframes modalIn{from{opacity:0;transform:scale(.95) translateY(20px)}to{opacity:1;transform:scale(1) translateY(0)}}
+.modal-header{padding:24px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between}
+.modal-body{padding:24px}
+.modal-close{width:32px;height:32px;border-radius:8px;background:var(--bg4);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:18px;cursor:pointer;color:var(--text2);transition:all .2s}
+.modal-close:hover{background:var(--red);color:white;border-color:var(--red)}
+.form-group{margin-bottom:18px}
+.form-label{display:block;font-size:13px;font-weight:600;color:var(--text2);margin-bottom:8px}
+.form-input{width:100%;background:var(--bg4);border:1.5px solid var(--border);border-radius:12px;padding:12px 16px;font-size:14px;color:var(--text);font-family:'Cairo',sans-serif;outline:none;transition:border-color .2s}
+.form-input:focus{border-color:var(--gold)}
+.form-tabs{display:flex;background:var(--bg4);border-radius:12px;padding:4px;margin-bottom:24px}
+.form-tab{flex:1;padding:10px;border-radius:10px;font-size:14px;font-weight:700;font-family:'Cairo',sans-serif;transition:all .2s;color:var(--text3)}
+.form-tab.active{background:linear-gradient(135deg,var(--gold),var(--gold-light));color:#0D0A00}
+
+/* ── RESPONSIVE ── */
+@media(max-width:900px){
+  .hero-content,.footer-grid{grid-template-columns:1fr}
+  .hero-visual{display:none}
+  .cats-grid,.inst-grid{grid-template-columns:repeat(2,1fr)}
+  .courses-grid,.testimonials-grid{grid-template-columns:1fr}
+  .steps-grid{grid-template-columns:repeat(2,1fr)}
+  .stats-grid{grid-template-columns:repeat(2,1fr)}
+  .nav-links{display:none}
+}
+@media(max-width:600px){
+  .cats-grid,.inst-grid,.steps-grid{grid-template-columns:1fr}
+  .hero-stats{flex-wrap:wrap;gap:20px}
+  .cta-box{padding:48px 24px}
+  .footer-grid{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-inner">
+    <div class="nav-logo">
+      <div class="logo-icon">س</div>
+      <span class="logo-text">منصة سهل</span>
+    </div>
+    <div class="nav-links">
+      <a href="#courses" class="nav-link">الدورات</a>
+      <a href="#categories" class="nav-link">التصنيفات</a>
+      <a href="#instructors" class="nav-link">المدرّبون</a>
+      <a href="#how" class="nav-link">كيف تعمل؟</a>
+    </div>
+    <div class="nav-actions">
+      <button class="btn btn-outline" style="padding:9px 20px;font-size:13px" onclick="openModal('login')">تسجيل الدخول</button>
+      <button class="btn btn-gold" style="padding:9px 20px;font-size:13px" onclick="openModal('register')">ابدأ مجاناً</button>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-grid"></div>
+  <div class="orb orb1"></div>
+  <div class="orb orb2"></div>
+  <div class="container">
+    <div class="hero-content">
+      <div>
+        <div class="hero-eyebrow">
+          <div class="hero-dot"></div>
+          <span class="badge badge-gold">🚀 منصة التعلم الأولى في العالم العربي</span>
+        </div>
+        <h1 class="hero-h1">
+          تعلّم بلا حدود،<br>
+          <span class="gold">طوّر مهاراتك</span><br>
+          وحقّق طموحاتك
+        </h1>
+        <p class="hero-p">أكثر من ٢٠٠٠ دورة تدريبية في مختلف المجالات، بأفضل المدرّبين، بلغة عربية احترافية. استثمر في نفسك اليوم.</p>
+        <div class="hero-btns">
+          <button class="btn btn-gold" onclick="document.getElementById('courses').scrollIntoView({behavior:'smooth'})">
+            استكشف الدورات
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
+          </button>
+          <button class="btn btn-outline" onclick="openModal('login')">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16"/></svg>
+            شاهد كيف تعمل
+          </button>
+        </div>
+        <div class="hero-stats">
+          <div>
+            <div class="hstat-val gold">+٥٠٠ك</div>
+            <div class="hstat-lbl">طالب مسجّل</div>
+          </div>
+          <div>
+            <div class="hstat-val gold">+٢٠٠٠</div>
+            <div class="hstat-lbl">دورة تدريبية</div>
+          </div>
+          <div>
+            <div class="hstat-val gold">٤.٨ ★</div>
+            <div class="hstat-lbl">متوسط التقييم</div>
+          </div>
+        </div>
+      </div>
+      <div class="hero-visual">
+        <div class="float-badge top">✅ ٢٤ طالب انضم اليوم</div>
+        <div class="hero-phone">
+          <div style="font-size:12px;color:var(--text3);margin-bottom:14px;font-weight:600">الدورات الأعلى تقييماً</div>
+          <div class="course-preview-card">
+            <div class="course-thumb" style="background:linear-gradient(135deg,#3B82F6,#6366F1)">💻</div>
+            <div style="flex:1">
+              <div style="font-size:13px;font-weight:700;margin-bottom:4px">React و Next.js الشاملة</div>
+              <div style="font-size:11px;color:var(--text3)">١٢,٣٠٠ طالب</div>
+            </div>
+            <div style="font-size:14px;font-weight:800;color:var(--gold)">٢٩٩ ر.س</div>
+          </div>
+          <div class="course-preview-card">
+            <div class="course-thumb" style="background:linear-gradient(135deg,#8B5CF6,#EC4899)">🎨</div>
+            <div style="flex:1">
+              <div style="font-size:13px;font-weight:700;margin-bottom:4px">تصميم UI/UX الاحترافي</div>
+              <div style="font-size:11px;color:var(--text3)">٨,٩٠٠ طالب</div>
+            </div>
+            <div style="font-size:14px;font-weight:800;color:var(--gold)">١٩٩ ر.س</div>
+          </div>
+          <div class="course-preview-card" style="border-color:rgba(16,185,129,.3)">
+            <div class="course-thumb" style="background:linear-gradient(135deg,#10B981,#059669)">📱</div>
+            <div style="flex:1">
+              <div style="font-size:13px;font-weight:700;margin-bottom:4px">التسويق الرقمي</div>
+              <div style="font-size:11px;color:var(--text3)">١٥,٢٠٠ طالب</div>
+            </div>
+            <div style="font-size:14px;font-weight:800;color:var(--green)">مجاناً</div>
+          </div>
+          <div style="display:flex;gap:8px;margin-top:14px">
+            <div style="flex:1;background:var(--bg4);border-radius:10px;padding:10px;text-align:center;font-size:11px;color:var(--text3)">
+              <div style="font-size:18px;font-weight:800;color:var(--text)">٦٧٪</div>
+              <div>معدل الإكمال</div>
+            </div>
+            <div style="flex:1;background:var(--bg4);border-radius:10px;padding:10px;text-align:center;font-size:11px;color:var(--text3)">
+              <div style="font-size:18px;font-weight:800;color:var(--gold)">٤.٨</div>
+              <div>متوسط التقييم</div>
+            </div>
+          </div>
+        </div>
+        <div class="float-badge bottom">🏆 الأفضل في المنطقة</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- STATS BAND -->
+<div class="stats-band fade-in">
+  <div class="container">
+    <div class="stats-grid">
+      <div>
+        <div class="stat-icon" style="background:rgba(59,130,246,.12)">👥</div>
+        <div class="stat-val gold" data-count="500000">٠</div>
+        <div class="stat-lbl">طالب مسجّل</div>
+      </div>
+      <div>
+        <div class="stat-icon" style="background:rgba(201,168,76,.12)">📚</div>
+        <div class="stat-val" style="color:var(--gold-light)" data-count="2000">٠</div>
+        <div class="stat-lbl">دورة تدريبية</div>
+      </div>
+      <div>
+        <div class="stat-icon" style="background:rgba(139,92,246,.12)">🎓</div>
+        <div class="stat-val" style="color:#A78BFA" data-count="1500">٠</div>
+        <div class="stat-lbl">مدرّب متخصص</div>
+      </div>
+      <div>
+        <div class="stat-icon" style="background:rgba(16,185,129,.12)">🌍</div>
+        <div class="stat-val" style="color:var(--green)" data-count="50">٠</div>
+        <div class="stat-lbl">دولة حول العالم</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- CATEGORIES -->
+<section class="categories fade-in" id="categories">
+  <div class="container">
+    <div class="section-header">
+      <div class="badge badge-gold" style="margin-bottom:16px">🗂️ التصنيفات</div>
+      <h2 class="section-title">استكشف <span class="gold">التصنيفات</span></h2>
+      <p class="section-sub">اختر من بين مئات التصنيفات وآلاف الدورات التي تناسب اهتماماتك</p>
+    </div>
+    <div class="cats-grid">
+      <div class="cat-card" onclick="filterCourses('برمجة')">
+        <div class="cat-icon" style="background:linear-gradient(135deg,#3B82F6,#6366F1)">💻</div>
+        <div class="cat-name">البرمجة وتطوير الويب</div>
+        <div class="cat-count">١,٢٤٠ دورة</div>
+      </div>
+      <div class="cat-card" onclick="filterCourses('تصميم')">
+        <div class="cat-icon" style="background:linear-gradient(135deg,#8B5CF6,#EC4899)">🎨</div>
+        <div class="cat-name">التصميم والجرافيك</div>
+        <div class="cat-count">٨٥٦ دورة</div>
+      </div>
+      <div class="cat-card" onclick="filterCourses('أعمال')">
+        <div class="cat-icon" style="background:linear-gradient(135deg,#F59E0B,#EF4444)">💼</div>
+        <div class="cat-name">الأعمال والإدارة</div>
+        <div class="cat-count">٧٢٠ دورة</div>
+      </div>
+      <div class="cat-card" onclick="filterCourses('تسويق')">
+        <div class="cat-icon" style="background:linear-gradient(135deg,#10B981,#059669)">📈</div>
+        <div class="cat-name">التسويق الرقمي</div>
+        <div class="cat-count">٦٣٠ دورة</div>
+      </div>
+      <div class="cat-card" onclick="filterCourses('لغات')">
+        <div class="cat-icon" style="background:linear-gradient(135deg,#6366F1,#3B82F6)">🌐</div>
+        <div class="cat-name">اللغات والترجمة</div>
+        <div class="cat-count">٤٥٠ دورة</div>
+      </div>
+      <div class="cat-card" onclick="filterCourses('صحة')">
+        <div class="cat-icon" style="background:linear-gradient(135deg,#EF4444,#EC4899)">❤️</div>
+        <div class="cat-name">الصحة واللياقة</div>
+        <div class="cat-count">٣٨٠ دورة</div>
+      </div>
+      <div class="cat-card" onclick="filterCourses('فنون')">
+        <div class="cat-icon" style="background:linear-gradient(135deg,#F59E0B,#FCD34D)">🎵</div>
+        <div class="cat-name">الفنون والموسيقى</div>
+        <div class="cat-count">٢٩٠ دورة</div>
+      </div>
+      <div class="cat-card" onclick="filterCourses('علوم')">
+        <div class="cat-icon" style="background:linear-gradient(135deg,#14B8A6,#06B6D4)">⚗️</div>
+        <div class="cat-name">العلوم والرياضيات</div>
+        <div class="cat-count">٤١٠ دورة</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- COURSES -->
+<section class="courses fade-in" id="courses">
+  <div class="container">
+    <div class="section-header">
+      <div class="badge badge-gold" style="margin-bottom:16px">⭐ الدورات المميزة</div>
+      <h2 class="section-title">أفضل <span class="gold">الدورات</span> لهذا الشهر</h2>
+      <p class="section-sub">دورات مختارة بعناية من أفضل المدرّبين في العالم العربي</p>
+    </div>
+    <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-bottom:40px" id="course-filters">
+      <button class="tag" style="cursor:pointer;padding:8px 18px;font-size:13px;background:linear-gradient(135deg,var(--gold),var(--gold-light));color:#0D0A00;border-radius:20px;font-weight:700" onclick="filterCourses('all')">الكل</button>
+      <button class="tag" style="cursor:pointer;padding:8px 18px;font-size:13px" onclick="filterCourses('برمجة')">💻 برمجة</button>
+      <button class="tag" style="cursor:pointer;padding:8px 18px;font-size:13px" onclick="filterCourses('تصميم')">🎨 تصميم</button>
+      <button class="tag" style="cursor:pointer;padding:8px 18px;font-size:13px" onclick="filterCourses('تسويق')">📈 تسويق</button>
+      <button class="tag" style="cursor:pointer;padding:8px 18px;font-size:13px" onclick="filterCourses('أعمال')">💼 أعمال</button>
+    </div>
+    <div class="courses-grid" id="courses-grid">
+      <!-- Filled by JS -->
+    </div>
+  </div>
+</section>
+
+<!-- INSTRUCTORS -->
+<section class="instructors fade-in" id="instructors">
+  <div class="container">
+    <div class="section-header">
+      <div class="badge badge-gold" style="margin-bottom:16px">👨‍🏫 المدرّبون</div>
+      <h2 class="section-title">أبرز <span class="gold">المدرّبين</span></h2>
+      <p class="section-sub">تعلّم من أفضل الخبراء والمتخصصين في مجالاتهم</p>
+    </div>
+    <div class="inst-grid">
+      <div class="inst-card">
+        <div class="inst-avatar-big" style="background:linear-gradient(135deg,#3B82F6,#6366F1)">أ</div>
+        <div class="inst-name">أحمد الراشد</div>
+        <div class="inst-specialty">مطوّر ويب متكامل</div>
+        <div class="stars">★★★★★</div>
+        <div class="inst-stats-row" style="margin-top:14px">
+          <div class="inst-stat"><div class="inst-stat-v">١٢,٣٠٠</div><div class="inst-stat-l">طالب</div></div>
+          <div class="inst-stat"><div class="inst-stat-v">٨</div><div class="inst-stat-l">دورة</div></div>
+          <div class="inst-stat"><div class="inst-stat-v">٤.٩</div><div class="inst-stat-l">تقييم</div></div>
+        </div>
+      </div>
+      <div class="inst-card">
+        <div class="inst-avatar-big" style="background:linear-gradient(135deg,#8B5CF6,#EC4899)">س</div>
+        <div class="inst-name">سارة المالكي</div>
+        <div class="inst-specialty">مصمّمة UI/UX</div>
+        <div class="stars">★★★★★</div>
+        <div class="inst-stats-row" style="margin-top:14px">
+          <div class="inst-stat"><div class="inst-stat-v">٨,٩٠٠</div><div class="inst-stat-l">طالب</div></div>
+          <div class="inst-stat"><div class="inst-stat-v">٥</div><div class="inst-stat-l">دورة</div></div>
+          <div class="inst-stat"><div class="inst-stat-v">٤.٨</div><div class="inst-stat-l">تقييم</div></div>
+        </div>
+      </div>
+      <div class="inst-card">
+        <div class="inst-avatar-big" style="background:linear-gradient(135deg,#10B981,#059669)">م</div>
+        <div class="inst-name">محمد العتيبي</div>
+        <div class="inst-specialty">خبير تسويق رقمي</div>
+        <div class="stars">★★★★★</div>
+        <div class="inst-stats-row" style="margin-top:14px">
+          <div class="inst-stat"><div class="inst-stat-v">١٥,٢٠٠</div><div class="inst-stat-l">طالب</div></div>
+          <div class="inst-stat"><div class="inst-stat-v">١١</div><div class="inst-stat-l">دورة</div></div>
+          <div class="inst-stat"><div class="inst-stat-v">٤.٧</div><div class="inst-stat-l">تقييم</div></div>
+        </div>
+      </div>
+      <div class="inst-card">
+        <div class="inst-avatar-big" style="background:linear-gradient(135deg,#F59E0B,#EF4444)">ن</div>
+        <div class="inst-name">نورة الزهراني</div>
+        <div class="inst-specialty">رائدة أعمال</div>
+        <div class="stars">★★★★★</div>
+        <div class="inst-stats-row" style="margin-top:14px">
+          <div class="inst-stat"><div class="inst-stat-v">٦,٤٠٠</div><div class="inst-stat-l">طالب</div></div>
+          <div class="inst-stat"><div class="inst-stat-v">٦</div><div class="inst-stat-l">دورة</div></div>
+          <div class="inst-stat"><div class="inst-stat-v">٤.٩</div><div class="inst-stat-l">تقييم</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="how fade-in" id="how">
+  <div class="container">
+    <div class="section-header">
+      <div class="badge badge-gold" style="margin-bottom:16px">🔄 كيف تعمل؟</div>
+      <h2 class="section-title">٤ خطوات بسيطة <span class="gold">للبدء</span></h2>
+      <p class="section-sub">ابدأ رحلتك التعليمية في دقائق</p>
+    </div>
+    <div class="steps-grid">
+      <div class="step-card">
+        <div class="step-num">١</div>
+        <div class="step-title">أنشئ حسابك</div>
+        <div class="step-desc">سجّل مجاناً وأنشئ ملفك الشخصي في أقل من دقيقة</div>
+      </div>
+      <div class="step-card">
+        <div class="step-num">٢</div>
+        <div class="step-title">اختر دورتك</div>
+        <div class="step-desc">تصفّح آلاف الدورات وفلتر حسب المجال والمستوى</div>
+      </div>
+      <div class="step-card">
+        <div class="step-num">٣</div>
+        <div class="step-title">تعلّم في أي وقت</div>
+        <div class="step-desc">دروس مسجّلة يمكنك مشاهدتها متى وأينما تشاء</div>
+      </div>
+      <div class="step-card">
+        <div class="step-num">٤</div>
+        <div class="step-title">احصل على شهادتك</div>
+        <div class="step-desc">أتمم الدورة واحصل على شهادة معتمدة ومُحققة</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="testimonials fade-in">
+  <div class="container">
+    <div class="section-header">
+      <div class="badge badge-gold" style="margin-bottom:16px">💬 آراء الطلاب</div>
+      <h2 class="section-title">ماذا يقول <span class="gold">طلابنا</span>؟</h2>
+    </div>
+    <div class="testimonials-grid">
+      <div class="test-card">
+        <div class="test-quote">"</div>
+        <p class="test-text">منصة رائعة جداً، الدورات واضحة ومنظّمة وتشعر أنك تتعلم من أفضل المدرّبين. غيّرت مساري المهني بالكامل.</p>
+        <div class="test-author">
+          <div class="test-avatar" style="background:linear-gradient(135deg,#3B82F6,#6366F1)">خ</div>
+          <div>
+            <div class="test-name">خالد الشمري</div>
+            <div class="test-role">مطوّر ويب — الرياض</div>
+          </div>
+          <div class="stars" style="margin-right:auto">★★★★★</div>
+        </div>
+      </div>
+      <div class="test-card">
+        <div class="test-quote">"</div>
+        <p class="test-text">أخيراً منصة عربية بجودة عالمية! الشهادات معتمدة وأثّرت إيجابياً في فرص توظيفي. أنصح بها بشدة لكل طموح.</p>
+        <div class="test-author">
+          <div class="test-avatar" style="background:linear-gradient(135deg,#8B5CF6,#EC4899)">ر</div>
+          <div>
+            <div class="test-name">رنا الأحمدي</div>
+            <div class="test-role">مصمّمة جرافيك — دبي</div>
+          </div>
+          <div class="stars" style="margin-right:auto">★★★★★</div>
+        </div>
+      </div>
+      <div class="test-card">
+        <div class="test-quote">"</div>
+        <p class="test-text">أكملت ٣ دورات حتى الآن وكل واحدة أفضل من السابقة. المحتوى متجدد والمدرّبون يردّون على الأسئلة فوراً.</p>
+        <div class="test-author">
+          <div class="test-avatar" style="background:linear-gradient(135deg,#10B981,#059669)">ع</div>
+          <div>
+            <div class="test-name">عبدالله القحطاني</div>
+            <div class="test-role">محلل بيانات — جدة</div>
+          </div>
+          <div class="stars" style="margin-right:auto">★★★★★</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section fade-in">
+  <div class="container">
+    <div class="cta-box">
+      <div class="badge badge-gold" style="margin-bottom:20px">🎯 ابدأ الآن</div>
+      <h2 class="cta-h2">جاهز لبدء <span class="gold">رحلتك التعليمية</span>؟</h2>
+      <p class="cta-p">انضم لأكثر من ٥٠٠,٠٠٠ طالب يتعلمون على منصة سهل كل يوم</p>
+      <div class="cta-btns">
+        <button class="btn btn-gold" style="padding:15px 40px;font-size:16px" onclick="openModal('register')">
+          ابدأ مجاناً الآن
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </button>
+        <button class="btn btn-outline" style="padding:15px 36px;font-size:16px" onclick="document.getElementById('courses').scrollIntoView({behavior:'smooth'})">
+          تصفّح الدورات
+        </button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="nav-logo">
+          <div class="logo-icon">س</div>
+          <span class="logo-text">منصة سهل</span>
+        </div>
+        <p>منصة التعلم الإلكتروني الأولى في العالم العربي. نوفّر تعليماً عالي الجودة بأسعار مناسبة لكل طموح.</p>
+        <div class="socials" style="margin-top:16px">
+          <div class="social-btn">𝕏</div>
+          <div class="social-btn">in</div>
+          <div class="social-btn">📘</div>
+          <div class="social-btn">📸</div>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h4>الدورات</h4>
+        <a class="footer-link">البرمجة والتطوير</a>
+        <a class="footer-link">التصميم والجرافيك</a>
+        <a class="footer-link">التسويق الرقمي</a>
+        <a class="footer-link">الأعمال والإدارة</a>
+        <a class="footer-link">اللغات</a>
+      </div>
+      <div class="footer-col">
+        <h4>المنصة</h4>
+        <a class="footer-link">كيف تعمل؟</a>
+        <a class="footer-link">للمدرّبين</a>
+        <a class="footer-link" onclick="openModal('register')">إنشاء حساب</a>
+        <a class="footer-link">الشراكات</a>
+        <a class="footer-link">المدوّنة</a>
+      </div>
+      <div class="footer-col">
+        <h4>الدعم</h4>
+        <a class="footer-link">مركز المساعدة</a>
+        <a class="footer-link">تواصل معنا</a>
+        <a class="footer-link">سياسة الاسترداد</a>
+        <a class="footer-link">الخصوصية</a>
+        <a class="footer-link">الشروط والأحكام</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© ٢٠٢٥ منصة سهل — جميع الحقوق محفوظة</span>
+      <div style="display:flex;gap:16px">
+        <span>🇸🇦 المملكة العربية السعودية</span>
+        <span>VAT: ٣٠٠XXXXXXXXX</span>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- AUTH MODAL -->
+<div class="modal-overlay" id="auth-modal">
+  <div class="modal">
+    <div class="modal-header">
+      <div>
+        <div class="nav-logo">
+          <div class="logo-icon" style="width:30px;height:30px;font-size:14px">س</div>
+          <span style="font-weight:700;font-size:16px">منصة سهل</span>
+        </div>
+      </div>
+      <button class="modal-close" onclick="closeModal()">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="form-tabs" id="form-tabs">
+        <button class="form-tab active" id="tab-login" onclick="switchTab('login')">تسجيل الدخول</button>
+        <button class="form-tab" id="tab-register" onclick="switchTab('register')">حساب جديد</button>
+      </div>
+
+      <!-- Login Form -->
+      <div id="login-form">
+        <div class="form-group">
+          <label class="form-label">البريد الإلكتروني</label>
+          <input type="email" class="form-input" placeholder="example@email.com" dir="ltr">
+        </div>
+        <div class="form-group">
+          <label class="form-label">كلمة المرور</label>
+          <input type="password" class="form-input" placeholder="••••••••" dir="ltr">
+        </div>
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px">
+          <label style="display:flex;align-items:center;gap:8px;font-size:13px;cursor:pointer;color:var(--text2)">
+            <input type="checkbox" style="accent-color:var(--gold)">
+            تذكّرني
+          </label>
+          <a style="font-size:13px;color:var(--gold);cursor:pointer">نسيت كلمة المرور؟</a>
+        </div>
+        <button class="btn btn-gold" style="width:100%;justify-content:center;padding:14px;font-size:15px" onclick="showToast('تم تسجيل الدخول بنجاح! 🎉')">
+          تسجيل الدخول
+        </button>
+        <p style="text-align:center;margin-top:18px;font-size:13px;color:var(--text3)">
+          ليس لديك حساب؟ <a style="color:var(--gold);cursor:pointer" onclick="switchTab('register')">سجّل الآن</a>
+        </p>
+      </div>
+
+      <!-- Register Form -->
+      <div id="register-form" style="display:none">
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px">
+          <div class="form-group">
+            <label class="form-label">الاسم الأول</label>
+            <input type="text" class="form-input" placeholder="أحمد">
+          </div>
+          <div class="form-group">
+            <label class="form-label">الاسم الأخير</label>
+            <input type="text" class="form-input" placeholder="الراشد">
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">البريد الإلكتروني</label>
+          <input type="email" class="form-input" placeholder="example@email.com" dir="ltr">
+        </div>
+        <div class="form-group">
+          <label class="form-label">كلمة المرور</label>
+          <input type="password" class="form-input" placeholder="٨ أحرف على الأقل" dir="ltr">
+        </div>
+        <div style="display:flex;gap:10px;margin-bottom:20px">
+          <button id="role-student" onclick="selectRole('student')" style="flex:1;padding:12px;border-radius:12px;font-size:13px;font-weight:700;font-family:'Cairo',sans-serif;border:2px solid var(--gold);background:rgba(201,168,76,.1);color:var(--gold);cursor:pointer">👨‍🎓 طالب</button>
+          <button id="role-instructor" onclick="selectRole('instructor')" style="flex:1;padding:12px;border-radius:12px;font-size:13px;font-weight:700;font-family:'Cairo',sans-serif;border:2px solid var(--border);background:transparent;color:var(--text2);cursor:pointer">👨‍🏫 مدرّب</button>
+        </div>
+        <button class="btn btn-gold" style="width:100%;justify-content:center;padding:14px;font-size:15px" onclick="showToast('تم إنشاء حسابك بنجاح! مرحباً بك 🎉')">
+          إنشاء الحساب
+        </button>
+        <p style="text-align:center;margin-top:18px;font-size:13px;color:var(--text3)">
+          لديك حساب؟ <a style="color:var(--gold);cursor:pointer" onclick="switchTab('login')">سجّل دخولك</a>
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div id="toast" style="position:fixed;bottom:30px;left:50%;transform:translateX(-50%) translateY(80px);background:var(--bg3);border:1px solid var(--border2);border-radius:14px;padding:14px 24px;font-size:14px;font-weight:600;box-shadow:0 16px 48px rgba(0,0,0,.5);z-index:300;transition:transform .4s ease,opacity .4s;opacity:0;white-space:nowrap"></div>
+
+<script>
+// ── Courses Data ──────────────────────────────────────────────────────────────
+const coursesData = [
+  {id:1,title:'React و Next.js الشاملة',inst:'أحمد الراشد',rating:4.8,reviews:1240,students:12300,price:299,orig:499,hours:40,cat:'برمجة',icon:'💻',color:'linear-gradient(135deg,#3B82F6,#6366F1)',badge:'bestseller',free:false},
+  {id:2,title:'تصميم UI/UX الاحترافي',inst:'سارة المالكي',rating:4.9,reviews:890,students:8900,price:199,orig:null,hours:28,cat:'تصميم',icon:'🎨',color:'linear-gradient(135deg,#8B5CF6,#EC4899)',badge:'new',free:false},
+  {id:3,title:'التسويق الرقمي من الصفر',inst:'محمد العتيبي',rating:4.7,reviews:2100,students:15200,price:0,orig:null,hours:22,cat:'تسويق',icon:'📈',color:'linear-gradient(135deg,#10B981,#059669)',badge:null,free:true},
+  {id:4,title:'Python للمبتدئين والمحترفين',inst:'عمر الحربي',rating:4.8,reviews:3400,students:28000,price:349,orig:599,hours:55,cat:'برمجة',icon:'🐍',color:'linear-gradient(135deg,#F59E0B,#10B981)',badge:'bestseller',free:false},
+  {id:5,title:'Figma من المبتدئ للمحترف',inst:'رنا الزهراني',rating:4.6,reviews:560,students:4800,price:149,orig:249,hours:18,cat:'تصميم',icon:'🖌️',color:'linear-gradient(135deg,#EC4899,#8B5CF6)',badge:null,free:false},
+  {id:6,title:'إدارة المشاريع الاحترافية',inst:'نورة القحطاني',rating:4.7,reviews:780,students:6200,price:249,orig:null,hours:32,cat:'أعمال',icon:'📊',color:'linear-gradient(135deg,#F59E0B,#EF4444)',badge:'new',free:false},
+];
+
+let currentFilter = 'all';
+
+function renderCourses(filter){
+  const grid = document.getElementById('courses-grid');
+  const filtered = filter==='all' ? coursesData : coursesData.filter(c=>c.cat===filter);
+  grid.innerHTML = filtered.map(c=>`
+    <div class="course-card fade-in visible">
+      <div class="course-thumb-big" style="background:${c.color}">
+        ${c.icon}
+        <div class="course-badges">
+          ${c.badge==='bestseller'?'<span class="badge" style="background:rgba(201,168,76,.9);color:#0D0A00">الأكثر مبيعاً</span>':''}
+          ${c.badge==='new'?'<span class="badge" style="background:rgba(16,185,129,.9);color:#fff">جديد</span>':''}
+          ${c.free?'<span class="badge" style="background:rgba(59,130,246,.9);color:#fff">مجاناً</span>':''}
+        </div>
+      </div>
+      <div class="course-body">
+        <div class="course-title">${c.title}</div>
+        <div class="course-instructor">
+          <div class="inst-avatar">${c.inst[0]}</div>
+          ${c.inst}
+        </div>
+        <div class="course-rating">
+          <span class="rating-val">${c.rating}</span>
+          <span class="stars">${'★'.repeat(Math.floor(c.rating))}${'☆'.repeat(5-Math.floor(c.rating))}</span>
+          <span class="rating-count">(${c.reviews.toLocaleString('ar-SA')})</span>
+        </div>
+        <div class="course-meta">
+          <span class="meta-item">⏱️ ${c.hours} ساعة</span>
+          <span class="meta-item">👥 ${c.students.toLocaleString('ar-SA')} طالب</span>
+        </div>
+        <div class="course-price-row">
+          <div>
+            ${c.free?'<span class="price-free">مجاناً</span>':`<span class="price-now">${c.price} ر.س</span>${c.orig?`<span class="price-orig">${c.orig} ر.س</span>`:''}`}
+          </div>
+          <button class="enroll-btn" onclick="showToast('تم الإضافة للسلة! 🛒')">
+            ${c.free?'ابدأ الآن':'أضف للسلة'}
+          </button>
+        </div>
+      </div>
+    </div>
+  `).join('');
+}
+
+function filterCourses(cat){
+  currentFilter = cat;
+  renderCourses(cat);
+  document.getElementById('courses').scrollIntoView({behavior:'smooth'});
+}
+
+// ── Modal ─────────────────────────────────────────────────────────────────────
+function openModal(tab){
+  document.getElementById('auth-modal').classList.add('open');
+  document.body.style.overflow='hidden';
+  switchTab(tab||'login');
+}
+function closeModal(){
+  document.getElementById('auth-modal').classList.remove('open');
+  document.body.style.overflow='';
+}
+function switchTab(tab){
+  document.getElementById('login-form').style.display = tab==='login'?'block':'none';
+  document.getElementById('register-form').style.display = tab==='register'?'block':'none';
+  document.getElementById('tab-login').className = 'form-tab'+(tab==='login'?' active':'');
+  document.getElementById('tab-register').className = 'form-tab'+(tab==='register'?' active':'');
+}
+function selectRole(r){
+  const s=document.getElementById('role-student');
+  const i=document.getElementById('role-instructor');
+  if(r==='student'){
+    s.style.cssText='flex:1;padding:12px;border-radius:12px;font-size:13px;font-weight:700;font-family:Cairo,sans-serif;border:2px solid var(--gold);background:rgba(201,168,76,.1);color:var(--gold);cursor:pointer';
+    i.style.cssText='flex:1;padding:12px;border-radius:12px;font-size:13px;font-weight:700;font-family:Cairo,sans-serif;border:2px solid var(--border);background:transparent;color:var(--text2);cursor:pointer';
+  } else {
+    i.style.cssText='flex:1;padding:12px;border-radius:12px;font-size:13px;font-weight:700;font-family:Cairo,sans-serif;border:2px solid var(--gold);background:rgba(201,168,76,.1);color:var(--gold);cursor:pointer';
+    s.style.cssText='flex:1;padding:12px;border-radius:12px;font-size:13px;font-weight:700;font-family:Cairo,sans-serif;border:2px solid var(--border);background:transparent;color:var(--text2);cursor:pointer';
+  }
+}
+document.getElementById('auth-modal').addEventListener('click',function(e){
+  if(e.target===this) closeModal();
+});
+
+// ── Toast ─────────────────────────────────────────────────────────────────────
+let toastTimer;
+function showToast(msg){
+  closeModal();
+  const t=document.getElementById('toast');
+  t.textContent=msg;
+  t.style.opacity='1';
+  t.style.transform='translateX(-50%) translateY(0)';
+  clearTimeout(toastTimer);
+  toastTimer=setTimeout(()=>{
+    t.style.opacity='0';
+    t.style.transform='translateX(-50%) translateY(80px)';
+  },3000);
+}
+
+// ── Counter Animation ─────────────────────────────────────────────────────────
+const toAr = n => n.toLocaleString('ar-SA');
+function animateCount(el, target){
+  let start=0, dur=1800, startTime=null;
+  function step(ts){
+    if(!startTime) startTime=ts;
+    const p=Math.min((ts-startTime)/dur,1);
+    const eased=1-Math.pow(1-p,3);
+    const val=Math.floor(eased*target);
+    el.textContent = target>=1000 ? '+'+toAr(val) : toAr(val);
+    if(p<1) requestAnimationFrame(step);
+    else el.textContent = target>=1000 ? '+'+toAr(target) : toAr(target);
+  }
+  requestAnimationFrame(step);
+}
+
+// ── Scroll Animations ─────────────────────────────────────────────────────────
+const observer = new IntersectionObserver(entries=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){
+      e.target.classList.add('visible');
+      // Counter
+      const counters = e.target.querySelectorAll('[data-count]');
+      counters.forEach(el=>animateCount(el, parseInt(el.dataset.count)));
+    }
+  });
+},{threshold:0.1});
+
+document.querySelectorAll('.fade-in').forEach(el=>observer.observe(el));
+
+// ── Init ──────────────────────────────────────────────────────────────────────
+renderCourses('all');
+
+// Nav scroll effect
+window.addEventListener('scroll',()=>{
+  const nav=document.querySelector('nav');
+  if(window.scrollY>50){
+    nav.style.background='rgba(8,12,14,.97)';
+    nav.style.boxShadow='0 4px 24px rgba(0,0,0,.4)';
+  } else {
+    nav.style.background='rgba(8,12,14,.85)';
+    nav.style.boxShadow='none';
+  }
+});
+</script>
+</body>
+</html>
